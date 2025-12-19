@@ -5,17 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>老棕的私人领地</title>
     <style>
-        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-align: center; }
-        .card { background: rgba(255, 255, 255, 0.1); padding: 2rem; border-radius: 20px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
-        h1 { margin-bottom: 0.5rem; }
-        p { opacity: 0.8; }
+        /* 基础样式 */
+        body { 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+            background: #0f172a; /* 深邃的暗色背景 */
+            color: white; 
+            overflow: hidden;
+        }
+
+        /* 动画卡片容器 */
+        .card { 
+            background: rgba(255, 255, 255, 0.05); 
+            padding: 3rem; 
+            border-radius: 24px; 
+            backdrop-filter: blur(12px); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            
+            /* 核心动画设置 */
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInMove 1.2s ease-out forwards;
+        }
+
+        /* 定义动画：淡入并向上浮动 */
+        @keyframes fadeInMove {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 1rem; letter-spacing: -1px; }
+        p { color: #94a3b8; line-height: 1.6; }
+        
+        /* 装饰用的小圆点 */
+        .status-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            margin-right: 8px;
+            box-shadow: 0 0 12px #10b981;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
     </style>
 </head>
 <body>
     <div class="card">
         <h1>你好，我是老棕 👋</h1>
-        <p>欢迎来到我的私人空间 hi.laozong.xyz</p>
-        <p>目前还在施工中......</p>
+        <p><span class="status-dot"></span> 私人站点已上线</p>
+        <p style="font-size: 0.9rem; margin-top: 2rem; opacity: 0.6;">
+            域名解析由 DNS 强力驱动<br>
+            访问地址: hilaozong.xyz
+        </p>
     </div>
 </body>
 </html>
