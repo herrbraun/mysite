@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To my Göttin - 圣诞快乐</title>
+    <!-- 引入 React 核心库 -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- 引入 Babel 用于解析 JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Framer Motion 动画库 -->
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Noto+Serif+SC:wght@300;700&display=swap');
+        
+        .font-handwriting { font-family: 'Dancing Script', cursive; }
+        body {
+            font-family: 'Noto Serif SC', serif;
+            scrollbar-width: thin;
+            scrollbar-color: #8b0000 #0a2e12;
+            background-color: #0a2e12;
+        }
+        .pause-animation { animation-play-state: paused !important; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a2e12; }
+        ::-webkit-scrollbar-thumb { background: #8b0000; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+        const { motion, AnimatePresence } = window.Motion;
+        
+        // 使用原生 SVG 定义图标，避免 React 冲突
+        const Heart = () => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="text-red-600">
+                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+            </svg>
+        );
+        const MapPin = () => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#c1a35f]">
+                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+        );
+        const Clock = () => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#8b0000]">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            </svg>
+        );
+        const PlayIcon = () => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="text-white/80 ml-1">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+        );
+        const PauseIcon = () => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="text-white/80">
+                <rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>
+            </svg>
+        );
+
+        const App = () => {
+            const [isPlaying, setIsPlaying] = useState(false);
+            const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+            const audioRef = useRef(null);
+
+            useEffect(() => {
+                // 1. 倒计时逻辑 - 设定为 2026年1月10日
+                const targetDate = new Date('2026-01-10T00:00:00');
+                const timer = setInterval(() => {
+                    const now = new Date();
+                    const difference = targetDate - now;
+                    if (difference > 0) {
+                        setTimeLeft({
+                            days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+                            hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+                            minutes: Math.floor((difference / 1000 / 60) % 60),
+                            seconds: Math.floor((difference / 1000) % 60)
+                        });
+                    }
+                }, 1000);
+                return () => clearInterval(timer);
+            }, []);
+
+            const toggleMusic = () => {
+                if (!audioRef.current) return;
+                if (isPlaying) {
+                    audioRef.current.pause();
+                } else {
+                    audioRef.current.play().catch(e => console.log("需用户交互开启音频"));
+                }
+                setIsPlaying(!isPlaying);
+            };
+
+            const memories = [
+                { date: '2.10', title: '初春的奔赴', location: '珠海', desc: '跨越城市的距离，我在珠海见到了最想见的你。', img: 'shengdan_image/2.10.jpg' },
+                { date: '4.4', title: '大理的风与民谣', location: '大理三塔 & 民谣酒吧', desc: '清明假期，海西的三塔见证了我们的足迹。夜晚的小酒吧，歌声铭刻了回忆。', img: 'shengdan_image/4.4.jpg' },
+                { date: '4.5', title: '洱海骑行', location: '洱海海东', desc: '租一辆小电瓶车，绕着洱海吹风，那一刻时间仿佛都静止了。', img: 'shengdan_image/4.5.jpg' },
+                { date: '6.7', title: '祝我的 Göttin 生日快乐', location: '成都', desc: '在成都，一份精致的西餐，和你在一起的每一秒都是庆典。', img: 'shengdan_image/6.7.jpg' },
+                { date: '8月', title: '平凡的幸福', location: '山姆超市', desc: '一起逛超市，感受生活的烟火气，也是最浪漫的事。', img: 'shengdan_image/8.jpg' },
+                { date: '10.24', title: '澳门的秋日回响', location: '澳门大三巴', desc: '大三巴下的篮球赛，和又一次短暂却珍贵的重逢。', img: 'shengdan_image/10.24.jpg' }
+            ];
+
+            return (
+                <div className="min-h-screen text-[#f5f5dc] selection:bg-[#8b0000] overflow-x-hidden relative">
+                    {/* 飘雪背景 */}
+                    <div className="fixed inset-0 pointer-events-none z-50">
+                        {[...Array(20)].map((_, i) => (
+                            <motion.div
+                                key={i}
+                                initial={{ y: -20, x: Math.random() * 100 + 'vw', opacity: 0 }}
+                                animate={{ y: '110vh', x: (Math.random() * 100 - 10) + 'vw', opacity: [0, 1, 1, 0] }}
+                                transition={{ duration: Math.random() * 10 + 5, repeat: Infinity, ease: "linear", delay: Math.random() * 5 }}
+                                className="text-white text-xl"
+                            >❄</motion.div>
+                        ))}
+                    </div>
+
+                    {/* 音乐播放器 */}
+                    <div className="fixed top-8 right-8 z-[100] flex flex-col items-center gap-2">
+                        <audio ref={audioRef} src="bgm.mp3" loop />
+                        <motion.button
+                            onClick={toggleMusic}
+                            animate={{ rotate: isPlaying ? 360 : 0 }}
+                            transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                            className={`w-16 h-16 rounded-full bg-black border-4 border-gray-700 flex items-center justify-center shadow-2xl relative overflow-hidden ${!isPlaying && 'pause-animation'}`}
+                        >
+                            <div className="absolute inset-0 border-[10px] border-black opacity-30 rounded-full"></div>
+                            {isPlaying ? <PauseIcon /> : <PlayIcon />}
+                        </motion.button>
+                        <span className="text-xs font-mono uppercase tracking-widest text-[#f5f5dc]/60">Music</span>
+                    </div>
+
+                    {/* Hero Section */}
+                    <section className="min-h-screen flex flex-col items-center justify-center text-center p-6 relative">
+                        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
+                            <h2 className="text-[#c1a35f] text-2xl mb-4 italic tracking-widest">Merry Christmas</h2>
+                            <h1 className="text-5xl md:text-7xl font-bold mb-8 text-[#8b0000] drop-shadow-lg">To my Göttin</h1>
+                            <p className="max-w-xl mx-auto text-lg leading-relaxed opacity-80">
+                                这是我们共同走过的 2025 年，<br />
+                                从成都到珠海，从大理到澳门，每一站的风景，因为有你才有了意义。
+                            </p>
+                        </motion.div>
+                    </section>
+
+                    {/* Memory Cards */}
+                    <section className="py-20 px-4 md:px-0">
+                        <div className="max-w-5xl mx-auto space-y-32">
+                            {memories.map((m, idx) => (
+                                <motion.div
+                                    key={idx}
+                                    initial={{ opacity: 0, x: idx % 2 === 0 ? -50 : 50 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.8 }}
+                                    className={`flex flex-col ${idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center gap-12`}
+                                >
+                                    <div className="bg-white p-4 pb-12 shadow-2xl rotate-2 hover:rotate-0 transition-all duration-500">
+                                        <div className="w-72 h-72 md:w-96 md:h-96 overflow-hidden bg-gray-200">
+                                            <img src={m.img} alt={m.title} className="w-full h-full object-cover" />
+                                        </div>
+                                        <div className="mt-4 font-handwriting text-gray-800 text-xl flex justify-between px-1">
+                                            <span>{m.date}</span>
+                                            <Heart />
+                                        </div>
+                                    </div>
+                                    <div className="flex-1 text-center md:text-left">
+                                        <div className="flex items-center gap-2 mb-2 justify-center md:justify-start">
+                                            <MapPin />
+                                            <span className="text-[#c1a35f] tracking-widest">{m.location}</span>
+                                        </div>
+                                        <h3 className="text-3xl font-bold mb-4">{m.title}</h3>
+                                        <p className="text-lg opacity-70 italic">"{m.desc}"</p>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </section>
+
+                    {/* Countdown */}
+                    <section className="py-32 bg-[#051a0b]/50 text-center">
+                        <div className="max-w-4xl mx-auto px-6">
+                            <div className="border-2 border-[#c1a35f]/30 p-12 relative">
+                                <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-[#0a2e12] px-6 py-2 flex items-center gap-2 text-[#c1a35f] font-bold">
+                                    <Clock /> COUNTDOWN
+                                </div>
+                                <h4 className="text-xl mb-12 opacity-80 italic">距离下一次在一月十多号见面，还有：</h4>
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                                    {[
+                                        { label: 'Days', val: timeLeft.days },
+                                        { label: 'Hours', val: timeLeft.hours },
+                                        { label: 'Mins', val: timeLeft.minutes },
+                                        { label: 'Secs', val: timeLeft.seconds }
+                                    ].map((item, i) => (
+                                        <div key={i} className="flex flex-col">
+                                            <span className="text-5xl font-bold text-[#8b0000] mb-2">{String(item.val).padStart(2, '0')}</span>
+                                            <span className="text-xs uppercase opacity-40">{item.label}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <footer className="py-20 text-center opacity-40 text-sm tracking-[0.2em]">
+                        Designed with Love by 老棕 | 2024.12.25
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
