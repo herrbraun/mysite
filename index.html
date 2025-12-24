@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -19,3 +20,82 @@
     </div>
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>老棕的私人领地</title>
+    <style>
+        /* 基础样式 */
+        body { 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+            background: #0f172a; /* 深邃的暗色背景 */
+            color: white; 
+            overflow: hidden;
+        }
+
+        /* 动画卡片容器 */
+        .card { 
+            background: rgba(255, 255, 255, 0.05); 
+            padding: 3rem; 
+            border-radius: 24px; 
+            backdrop-filter: blur(12px); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            
+            /* 核心动画设置 */
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInMove 1.2s ease-out forwards;
+        }
+
+        /* 定义动画：淡入并向上浮动 */
+        @keyframes fadeInMove {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 1rem; letter-spacing: -1px; }
+        p { color: #94a3b8; line-height: 1.6; }
+        
+        /* 装饰用的小圆点 */
+        .status-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            margin-right: 8px;
+            box-shadow: 0 0 12px #10b981;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>你好，我是老棕 👋</h1>
+        <p><span class="status-dot"></span> 私人站点已上线</p>
+        <p style="font-size: 0.9rem; margin-top: 2rem; opacity: 0.6;">
+            域名解析由 DNS 强力驱动<br>
+            访问地址: hilaozong.xyz
+        </p>
+    </div>
+</body>
+</html>
+>>>>>>> 0578f4490923624dee00493c2f0673c61c892a4b
