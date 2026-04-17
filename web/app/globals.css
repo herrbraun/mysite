@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+:root {
+  --color-bg: #f3efe5;
+  --color-paper: #fffdf6;
+  --color-ink: #1f2a36;
+  --color-accent: #1f4b6e;
+  --color-accent-soft: #d7e9f7;
+  --color-line: #d9d0be;
+  --font-body: "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+  --font-title: "STKaiti", "KaiTi", "FangSong", "Noto Serif CJK SC", serif;
+}
+
+@theme inline {
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-ink);
+  --font-sans: var(--font-body);
+}
+
+body {
+  background:
+    radial-gradient(circle at 20% 10%, #dbe9d4 0%, #f3efe5 35%),
+    radial-gradient(circle at 90% 20%, #e3edf6 0%, transparent 35%),
+    var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body), sans-serif;
+}
+
+.site-title {
+  font-family: var(--font-title), serif;
+}
+
+.paper-card {
+  background: color-mix(in oklab, var(--color-paper) 96%, white);
+  border: 1px solid var(--color-line);
+  box-shadow: 0 18px 45px rgba(22, 40, 52, 0.12);
+}
+
+.ink-link {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.ink-link:hover {
+  text-decoration: underline;
+}
