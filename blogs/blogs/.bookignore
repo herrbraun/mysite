@@ -1,0 +1,14 @@
+.git/
+.gitbook/
+.vscode/
+node_modules/
+dist/
+_book/
+
+.dockerignore
+.gitignore
+.bookignore
+Dockerfile
+docker-compose.yml
+LICENSE
+ssh_config

@@ -3,3 +3,5 @@ dist/
 
 blogs/blogs/node_modules/
 blogs/blogs/_book/
+blogs/blogs/.gitbook/
+blogs/blogs/.vscode/
