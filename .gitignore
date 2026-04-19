@@ -1,0 +1,5 @@
+node_modules/
+dist/
+
+blogs/blogs/node_modules/
+blogs/blogs/_book/
