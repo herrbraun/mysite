@@ -44,6 +44,21 @@
 
         h1 { font-size: 2.5rem; margin-bottom: 1rem; letter-spacing: -1px; }
         p { color: #94a3b8; line-height: 1.6; }
+        .blog-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.75rem 1.25rem;
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .blog-link:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
         
         /* 装饰用的小圆点 */
         .status-dot {
@@ -72,6 +87,7 @@
             域名解析由 DNS 强力驱动<br>
             访问地址: hilaozong.xyz
         </p>
+        <a class="blog-link" href="/blog/">进入博客</a>
     </div>
 </body>
 </html>
